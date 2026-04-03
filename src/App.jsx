@@ -4,18 +4,18 @@ import Dashboard from './pages/Dashboard'
 import Transactions from './pages/Transactions'
 import Insights from './pages/Insights'
 
-const PAGES = {
-  dashboard: <Dashboard />,
-  transactions: <Transactions />,
-  insights: <Insights />,
-}
-
 export default function App() {
   const [currentPage, setCurrentPage] = useState('dashboard')
 
+  const pages = {
+    dashboard: <Dashboard onNavigate={setCurrentPage} />,
+    transactions: <Transactions />,
+    insights: <Insights />,
+  }
+
   return (
     <Layout currentPage={currentPage} onNavigate={setCurrentPage}>
-      {PAGES[currentPage]}
+      {pages[currentPage]}
     </Layout>
   )
 }
