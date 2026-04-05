@@ -7,13 +7,13 @@ export default function Dashboard({ onNavigate }) {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-white text-xl font-bold">Good morning, Sushanth 👋</h2>
-        <p className="text-[#64748b] text-xs font-mono mt-1">HERE'S YOUR FINANCIAL SNAPSHOT</p>
+        <h2 className="text-slate-900 text-lg font-semibold">Good morning, Sushanth</h2>
+        <p className="text-slate-400 text-xs mt-0.5">Here is your financial snapshot for April 2026</p>
       </div>
 
       <SummaryCards />
 
-      <div className="flex gap-4">
+      <div className="grid grid-cols-1 lg:flex lg:flex-row gap-4">
         <BalanceTrend />
         <SpendingDonut />
       </div>

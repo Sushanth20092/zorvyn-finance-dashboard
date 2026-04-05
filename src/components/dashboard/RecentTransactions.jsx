@@ -1,6 +1,6 @@
 import useFinanceStore from '../../store/useFinanceStore'
 import { formatINR, formatDate } from '../../utils/formatters'
-import { CATEGORIES } from '../../constants/categories'
+import CategoryIcon from '../ui/CategoryIcon'
 
 export default function RecentTransactions({ onNavigate }) {
   const transactions = useFinanceStore((s) => s.transactions)
@@ -9,15 +9,15 @@ export default function RecentTransactions({ onNavigate }) {
     .slice(0, 5)
 
   return (
-    <div className="bg-[#1a1d27] rounded-xl border border-[#2a2d3a] mt-6">
-      <div className="flex items-center justify-between px-5 py-4 border-b border-[#2a2d3a]">
+    <div className="bg-white rounded-xl border border-slate-200 mt-6 hover:shadow-sm transition-all">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
         <div>
-          <h3 className="text-white font-semibold text-sm">Recent Activity</h3>
-          <p className="text-[#64748b] text-xs font-mono mt-0.5">LAST 5 TRANSACTIONS</p>
+          <h3 className="text-slate-800 font-semibold text-sm">Recent Activity</h3>
+          <p className="text-slate-400 text-xs mt-0.5">Last 5 transactions</p>
         </div>
         <button
           onClick={() => onNavigate('transactions')}
-          className="text-indigo-400 text-xs font-medium hover:text-indigo-300 transition-colors"
+          className="text-indigo-500 text-xs font-medium hover:text-indigo-600 transition-colors"
         >
           View all →
         </button>
@@ -25,30 +25,24 @@ export default function RecentTransactions({ onNavigate }) {
 
       {recent.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-4xl mb-3">💸</p>
-          <p className="text-[#64748b] text-sm font-mono">No transactions yet</p>
+          <p className="text-slate-400 text-sm">No transactions yet</p>
         </div>
       ) : (
-        <div className="divide-y divide-[#2a2d3a]">
-          {recent.map((tx) => {
-            const cat = CATEGORIES[tx.category]
-            return (
-              <div key={tx.id} className="flex items-center justify-between px-5 py-3.5 hover:bg-[#2a2d3a]/40 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className={`w-9 h-9 rounded-lg ${cat?.bg} flex items-center justify-center text-base`}>
-                    {cat?.emoji}
-                  </div>
-                  <div>
-                    <p className="text-white text-sm font-medium">{tx.desc}</p>
-                    <p className="text-[#64748b] text-xs font-mono">{formatDate(tx.date)}</p>
-                  </div>
+        <div className="divide-y divide-slate-50">
+          {recent.map((tx) => (
+            <div key={tx.id} className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors">
+              <div className="flex items-center gap-3">
+                <CategoryIcon category={tx.category} />
+                <div>
+                  <p className="text-slate-700 text-sm font-medium">{tx.desc}</p>
+                  <p className="text-slate-400 text-xs font-mono">{formatDate(tx.date)}</p>
                 </div>
-                <span className={`text-sm font-mono font-semibold ${tx.type === 'income' ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {tx.type === 'income' ? '+' : '-'}{formatINR(tx.amount)}
-                </span>
               </div>
-            )
-          })}
+              <span className={`text-sm font-mono font-semibold ${tx.type === 'income' ? 'text-emerald-500' : 'text-red-500'}`}>
+                {tx.type === 'income' ? '+' : '-'}{formatINR(tx.amount)}
+              </span>
+            </div>
+          ))}
         </div>
       )}
     </div>

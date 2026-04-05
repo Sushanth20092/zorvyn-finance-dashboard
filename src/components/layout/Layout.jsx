@@ -1,21 +1,24 @@
+import { useState } from 'react'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
-import useFinanceStore from '../../store/useFinanceStore'
-import { useEffect } from 'react'
 
 export default function Layout({ children, currentPage, onNavigate }) {
-  const theme = useFinanceStore((s) => s.theme)
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark')
-  }, [theme])
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="flex min-h-screen bg-[#0f1117]">
-      <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
-      <div className="flex flex-col flex-1 ml-60">
-        <Topbar currentPage={currentPage} />
-        <main className="flex-1 p-6 overflow-y-auto">
+    <div className="flex min-h-screen bg-slate-50">
+      <Sidebar
+        currentPage={currentPage}
+        onNavigate={onNavigate}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+      <div className="flex flex-col flex-1 lg:ml-56 min-w-0">
+        <Topbar
+          currentPage={currentPage}
+          onMenuClick={() => setSidebarOpen(true)}
+        />
+        <main className="flex-1 p-4 md:p-6 max-w-screen-xl">
           {children}
         </main>
       </div>

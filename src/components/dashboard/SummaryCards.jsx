@@ -17,30 +17,30 @@ export default function SummaryCards() {
       value: formatINR(balance),
       sub: `${savingsRate}% savings rate`,
       icon: Wallet,
-      iconColor: 'text-indigo-400',
-      iconBg: 'bg-indigo-500/10',
-      border: 'border-indigo-500/20',
-      valueColor: 'text-white',
+      iconClass: 'text-indigo-500',
+      iconBg: 'bg-indigo-50',
+      valueClass: 'text-slate-900',
+      subClass: 'text-slate-400',
     },
     {
       label: 'Total Income',
       value: formatINR(income),
-      sub: `${incomeCount} credits this period`,
+      sub: `${incomeCount} credit${incomeCount !== 1 ? 's' : ''}`,
       icon: TrendingUp,
-      iconColor: 'text-emerald-400',
-      iconBg: 'bg-emerald-500/10',
-      border: 'border-emerald-500/20',
-      valueColor: 'text-emerald-400',
+      iconClass: 'text-emerald-500',
+      iconBg: 'bg-emerald-50',
+      valueClass: 'text-emerald-600',
+      subClass: 'text-slate-400',
     },
     {
       label: 'Total Expenses',
       value: formatINR(expenses),
-      sub: `${expenseCount} debits this period`,
+      sub: `${expenseCount} debit${expenseCount !== 1 ? 's' : ''}`,
       icon: TrendingDown,
-      iconColor: 'text-red-400',
-      iconBg: 'bg-red-500/10',
-      border: 'border-red-500/20',
-      valueColor: 'text-red-400',
+      iconClass: 'text-red-500',
+      iconBg: 'bg-red-50',
+      valueClass: 'text-red-500',
+      subClass: 'text-slate-400',
     },
   ]
 
@@ -51,22 +51,18 @@ export default function SummaryCards() {
         return (
           <div
             key={card.label}
-            className={`bg-[#1a1d27] rounded-xl p-5 border ${card.border} hover:border-opacity-60 transition-all`}
+            className="bg-white rounded-xl p-5 border border-slate-200 hover:border-slate-300 hover:shadow-sm transition-all duration-200"
           >
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <p className="text-[#64748b] text-xs font-mono tracking-widest uppercase">
-                  {card.label}
-                </p>
-              </div>
-              <div className={`${card.iconBg} ${card.iconColor} p-2 rounded-lg`}>
-                <Icon size={16} />
+            <div className="flex items-center justify-between mb-5">
+              <p className="text-slate-500 text-xs font-medium">{card.label}</p>
+              <div className={`w-7 h-7 rounded-lg ${card.iconBg} flex items-center justify-center`}>
+                <Icon size={14} className={card.iconClass} strokeWidth={2} />
               </div>
             </div>
-            <p className={`text-2xl font-bold ${card.valueColor} tracking-tight`}>
+            <p className={`text-2xl font-bold tracking-tight ${card.valueClass}`}>
               {card.value}
             </p>
-            <p className="text-[#64748b] text-xs mt-2">{card.sub}</p>
+            <p className={`text-xs mt-2 ${card.subClass}`}>{card.sub}</p>
           </div>
         )
       })}

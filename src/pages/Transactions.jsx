@@ -25,7 +25,7 @@ export default function Transactions() {
     <div>
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h2 className="text-white text-xl font-bold">Transactions</h2>
+          <h2 className="text-blue text-xl font-bold">Transactions</h2>
           <p className="text-[#64748b] text-xs font-mono mt-1">ALL FINANCIAL ACTIVITY</p>
         </div>
         {isAdmin && (

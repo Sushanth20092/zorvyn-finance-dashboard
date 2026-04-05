@@ -1,14 +1,15 @@
 import useFinanceStore from '../../store/useFinanceStore'
-import { Sun, Moon, Download } from 'lucide-react'
+import { Download, Menu } from 'lucide-react'
 
-const PAGE_TITLES = {
-  dashboard: 'Overview',
-  transactions: 'Transactions',
-  insights: 'Insights',
+const PAGE_META = {
+  dashboard:    { title: 'Overview',     sub: 'April 2026' },
+  transactions: { title: 'Transactions', sub: 'All activity' },
+  insights:     { title: 'Insights',     sub: 'Spending analysis' },
 }
 
-export default function Topbar({ currentPage }) {
-  const { theme, toggleTheme, role, transactions } = useFinanceStore()
+export default function Topbar({ currentPage, onMenuClick }) {
+  const { transactions } = useFinanceStore()
+  const meta = PAGE_META[currentPage]
 
   function exportData() {
     const json = JSON.stringify(transactions, null, 2)
@@ -22,42 +23,30 @@ export default function Topbar({ currentPage }) {
   }
 
   return (
-    <header className="h-16 bg-[#1a1d27] border-b border-[#2a2d3a] flex items-center justify-between px-6 sticky top-0 z-40">
-      
-      <div>
-        <h1 className="text-white font-bold text-lg leading-none">
-          {PAGE_TITLES[currentPage]}
-        </h1>
-        <p className="text-[#64748b] text-xs font-mono mt-0.5">APRIL 2026</p>
+    <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 sticky top-0 z-40">
+      <div className="flex items-center gap-3">
+        {/* Hamburger — mobile only */}
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden text-slate-500 hover:text-slate-800 transition-colors mr-1"
+        >
+          <Menu size={18} />
+        </button>
+        <div>
+          <h1 className="text-slate-900 font-semibold text-sm leading-none">{meta.title}</h1>
+          <p className="text-slate-400 text-xs mt-0.5">{meta.sub}</p>
+        </div>
       </div>
 
-      <div className="flex items-center gap-3">
-        {/* Role Badge */}
-        <span className={`text-xs font-mono font-semibold px-3 py-1 rounded-full
-          ${role === 'admin'
-            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-            : 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-          }`}>
-          {role === 'admin' ? '⚡ Admin' : '👁 Viewer'}
-        </span>
-
-        {/* Export */}
+      <div className="flex items-center gap-2">
         <button
           onClick={exportData}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#2a2d3a] text-[#64748b] hover:text-white text-xs font-medium transition-all border border-[#2a2d3a] hover:border-[#3a3d4a]"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-50 text-xs font-medium transition-all"
         >
-          <Download size={13} /> Export
-        </button>
-
-        {/* Theme Toggle */}
-        <button
-          onClick={toggleTheme}
-          className="w-8 h-8 rounded-lg bg-[#2a2d3a] flex items-center justify-center text-[#64748b] hover:text-white transition-all border border-[#2a2d3a] hover:border-[#3a3d4a]"
-        >
-          {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+          <Download size={12} />
+          Export JSON
         </button>
       </div>
-
     </header>
   )
 }
